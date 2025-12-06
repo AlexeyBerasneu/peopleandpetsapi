@@ -42,7 +42,7 @@ class PetControllerTest {
         );
         userService.createUser(user);
         String petJson = objectMapper.writeValueAsString(pet);
-        String createdPetJson = mockMvc.perform(MockMvcRequestBuilders.post("/{userId}/pets", user.getId())
+        String createdPetJson = mockMvc.perform(MockMvcRequestBuilders.post("/pets/{userId}", user.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(petJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -66,7 +66,7 @@ class PetControllerTest {
         );
         userService.createUser(user);
         String petJson = objectMapper.writeValueAsString(pet);
-        mockMvc.perform(MockMvcRequestBuilders.post("/{userId}/pets", user.getId())
+        mockMvc.perform(MockMvcRequestBuilders.post("/pets/{userId}", user.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(petJson))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
