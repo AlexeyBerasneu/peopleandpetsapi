@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/pets")
 public class PetController {
 
     private final PetService petService;
@@ -23,8 +24,8 @@ public class PetController {
         this.petService = petService;
     }
 
-    @PostMapping("/{userID}/pets")
-    public ResponseEntity<Pet> createPet(@PathVariable("userID")
+    @PostMapping("/{userId}")
+    public ResponseEntity<Pet> createPet(@PathVariable("userId")
                                          @Positive
                                          @NotNull
                                          Long userID,
@@ -35,22 +36,22 @@ public class PetController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newPet);
     }
 
-    @GetMapping("/pets/{id}")
-    public ResponseEntity<Pet> getPet(@PathVariable("id")
-                                      @NotNull
-                                      @Positive Long id) {
+    @GetMapping("/{id}")
+    public Pet getPet(@PathVariable("id")
+                      @NotNull
+                      @Positive Long id) {
         log.info("Get pet: {}", id);
         Pet pet = petService.getPetById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(pet);
+        return pet;
     }
 
-    @GetMapping("/pets")
+    @GetMapping
     public List<Pet> getAllPets() {
         log.info("Get pets");
         return petService.getAllPets();
     }
 
-    @PutMapping("/pets/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Pet> updatePet(@PathVariable("id")
                                          @NotNull
                                          @Positive Long id,
@@ -61,7 +62,7 @@ public class PetController {
         return ResponseEntity.status(HttpStatus.OK).body(updatedPet);
     }
 
-    @DeleteMapping("/pets/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePet(@PathVariable("id") Long id) {
         log.info("Delete pet: {}", id);
         petService.deletePetById(id);

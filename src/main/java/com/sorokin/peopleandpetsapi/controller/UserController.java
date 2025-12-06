@@ -28,7 +28,7 @@ public class UserController {
     public ResponseEntity<User> createUser(@Valid
                                            @RequestBody User user) {
         log.info("Create user: {}", user);
-        User newUser =  userService.createUser(user);
+        User newUser = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
@@ -48,20 +48,20 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id")
-                           @NotNull
-                           @Positive Long id) {
+                                           @NotNull
+                                           @Positive Long id) {
         log.info("Delete user: {}", id);
         userService.deleteUserById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable("id")
-                           @NotNull
-                           @Positive Long id,
-                           @RequestBody
-                           @Valid User user) {
+    public ResponseEntity<User> updateUser(@PathVariable("id")
+                                           @NotNull
+                                           @Positive Long id,
+                                           @RequestBody
+                                           @Valid User user) {
         log.info("Update user: {}", user);
-        return userService.updateUser(id, user);
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id, user));
     }
 }

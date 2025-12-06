@@ -10,9 +10,10 @@ import java.util.*;
 @Service
 public class PetService {
 
-    private Long idCounter;
     private final UserService userService;
     private final Map<Long, Pet> petMap;
+    private Long idCounter;
+
 
     public PetService(UserService userService) {
         this.userService = userService;
@@ -20,7 +21,7 @@ public class PetService {
         idCounter = 0L;
     }
 
-    public Pet createPet(Long userID ,Pet pet) {
+    public Pet createPet(Long userID, Pet pet) {
         User user = userService.getUserById(userID);
         Long newId = ++idCounter;
         pet.setId(newId);
@@ -48,7 +49,7 @@ public class PetService {
 
     public void deletePetById(Long id) {
         Pet petToDelete = getPetById(id);
-        User user=userService.getUserById(petToDelete.getUserId());
+        User user = userService.getUserById(petToDelete.getUserId());
         user.removePet(petToDelete);
         petMap.remove(id);
     }

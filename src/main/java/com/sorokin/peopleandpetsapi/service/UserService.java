@@ -9,7 +9,6 @@ import java.util.*;
 @Service
 public class UserService {
 
-
     private Long idCounter;
     private final Map<Long, User> userMap;
 
